@@ -5,7 +5,7 @@ Gem::Specification.new do |s|
   s.version     = '1.5.1'
   s.platform    = Gem::Platform::RUBY
   s.date        = '2014-04-24'
-  s.summary     = "Library for parsing C++ header files"  
+  s.summary     = "Library for parsing C++ header files"
   s.authors     = ["David Fuenmayor"]
   s.email       = ["davfuenmayor@gmail.com"]
   s.description = <<-END
@@ -14,15 +14,16 @@ This library is based on Nokogiri (http://nokogiri.org) and takes as input the x
 Parsing with Doxygen allows us to parse even a set of non-compilable include files. This is very useful in case you need to extract metadata for a big library which won't normally compile because of being incomplete or needing further build configuration (think of Makefiles, Visual Studio and similar).
 By using other tools which rely on a real C/C++ processor like gccxml or swig, you would normally get lots of compilation-related errors (which is undesired because we don't want to compile anything!). Doxyparser is, in such cases, the lean alternative.
 END
-  
+
   patterns = [
     'README.md',
     'MIT_LICENSE',
     'lib/**/*.rb',
+    'resources'
   ]
   s.files = patterns.map {|p| Dir.glob(p) }.flatten
   s.homepage    =    'https://github.com/davfuenmayor/ruby-doxygen-parser'
-    
+
   s.test_files = Dir.glob('spec/**/*.rb')
 
   s.require_paths = ['lib']
