@@ -60,11 +60,12 @@ module Doxyparser
     # Generates intermediate XML representation for a group of header files
     # @param source_dirs [Array<String>, String] Input source directory (or directories)
     # @param xml_dir [String] Output Directory for the generated XML documents
+    # @param doxyfile [String] Deoxyfile to use. Defaults to provided one if not provided.
     # @param recursive if present (and not nil) sets the RECURSIVE FLAG in Doxygen. Subdirectories will also be searched 
     # @param include_dirs [Array<String>, String] Adds given directories to Doxygen's INCLUDE_PATH (Doxyfile variable)
     # @param generate_html if present (and not nil) HTML documentation will also be generated 
     # @param stl_support if present (and not nil) sets the BUILTIN_STL_SUPPORT flag in Doxygen. Special support for STL Libraries
-    def gen_xml_docs(source_dirs, xml_dir, recursive = nil, include_dirs = nil, generate_html = nil, stl_support = 1)
+    def gen_xml_docs(source_dirs, xml_dir, doxyfile = nil, recursive = nil, include_dirs = nil, generate_html = nil, stl_support = 1)
     	
     	if include_dirs.nil? || include_dirs.empty?
     		inc_dirs = ''
@@ -92,7 +93,7 @@ module Doxyparser
       doxyfile << %Q{PROJECT_NAME\t\t= "#{proj_name}"\nINPUT\t\t\t\t= #{src_dirs}\nGENERATE_HTML\t\t= #{gen_html}\n}
       doxyfile << %Q{RECURSIVE\t\t\t= #{recursive}\nINCLUDE_PATH\t\t= #{inc_dirs}\nBUILTIN_STL_SUPPORT\t= #{stl_support}\n}
       doxyfile << "# Default doxygen configuration options\n\n"
-      doxyfile << Doxyparser::Util.read_file(home_dir+'/resources/Doxyfile')
+      doxyfile << Doxyparser::Util.read_file(doxyfile || home_dir+'/resources/Doxyfile')
       doxyfile_path = xml_dir+'/Doxyfile'
       FileUtils.mkdir_p(xml_dir)
       Doxyparser::Util.write_file(doxyfile_path, doxyfile)      
